@@ -3,19 +3,19 @@ Backend DevRadar
 
 [< back](../readme.md)
 
-### Installation
+## Installation
 ```
 $ npm install
 ```
 
-### Configuration
+## Configuration
 Use .env.example as a template for your configs and replace as you wish:
 ```
 $ mv .env.example
 $ vim .env
 ```
 
-### Running
+## Running
 ```
 $ yarn dev
 # or
@@ -23,7 +23,7 @@ $ npm run dev
 ```
 
 
-### Exposed APIs:
+## Exposed APIs:
 ``` 
 get /devs
 ```
