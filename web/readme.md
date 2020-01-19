@@ -1,7 +1,7 @@
 Web App DevRadar
 ===
 
-[< back](../readme.md)
+[< back](https://github.com/alande-amorim/omnistack10/)
 
 ## Installation
 ```

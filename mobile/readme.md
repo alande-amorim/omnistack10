@@ -1,7 +1,7 @@
 Mobile App DevRadar
 ===
 
-[< back](/)
+[< back](https://github.com/alande-amorim/omnistack10/)
 
 ## Installation
 ```
