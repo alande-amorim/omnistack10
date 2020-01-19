@@ -32,6 +32,7 @@ PORT=3000
 ```
 $ yarn start
 ```
+This will start the server in development environment (.env.development).
 
 ---
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
