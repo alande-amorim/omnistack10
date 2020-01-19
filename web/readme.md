@@ -27,7 +27,7 @@ PORT=3000
 ```
 
 ## Running
-1. Start the [backend](../backend/readme.md) service first.
+1. Start the [backend](../backend/) service first.
 2. Start the web app:
 ```
 $ yarn start

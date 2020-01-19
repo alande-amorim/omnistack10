@@ -1,7 +1,7 @@
 Backend DevRadar
 ===
 
-[< back](../readme.md)
+[< back](../)
 
 ## Installation
 ```
