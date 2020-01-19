@@ -1,17 +1,15 @@
-# DevRadar
-Omnistack #10 week Project
+Backend DevRadar
+===
 
-## Backend
+[< back](../readme.md)
 
 ### Installation
-After cloning, install it running:
 ```
-$ cd backend
 $ npm install
 ```
 
 ### Configuration
-Make a copy of .env.example and add your configurations:
+Use .env.example as a template for your configs and replace as you wish:
 ```
 $ mv .env.example
 $ vim .env
