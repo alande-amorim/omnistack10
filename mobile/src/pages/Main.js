@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image } from 'react-native';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Keyboard } from 'react-native';
 import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -13,29 +13,45 @@ function Main({ navigation }) {
     const [ techs, setTechs ] = useState('');
     const [ currentRegion, setCurrentRegion ] = useState(null);
 
-    useEffect(() => {
-        async function loadInitialPosition() {
-            const { granted } = await requestPermissionsAsync();
+    const [keyboardHeight, setKeyboardHeight] = useState(0);
 
-            if(granted) {
-                const { coords } = await getCurrentPositionAsync({
-                    enableHighAccuracy: true
-                });
+    async function loadPosition() {
+        const { granted } = await requestPermissionsAsync();
 
-                const { latitude, longitude } = coords;
+        if(granted) {
+            const { coords } = await getCurrentPositionAsync({
+                enableHighAccuracy: true
+            });
+    
+            const { latitude, longitude } = coords;
 
-                setCurrentRegion({
-                    latitude,
-                    longitude,
-                    latitudeDelta: 0.04,
-                    longitudeDelta: 0.04,
-                });
-            }
+            setCurrentRegion({
+                latitude,
+                longitude,
+                latitudeDelta: 0.04,
+                longitudeDelta: 0.04,
+            });
         }
-        
-        loadInitialPosition();
+    }
+
+    useEffect(() => {
+        loadPosition();
     }, []);
     
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', (e) => {
+            setKeyboardHeight(e.endCoordinates.height);
+        });
+        const keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', () => {
+            setKeyboardHeight(0);
+        });
+    
+        return () => {
+          keyboardDidHideListener.remove();
+          keyboardDidShowListener.remove();
+        };
+    }, []);
+
     function handleRegionChanged(region) {
         setCurrentRegion(region);
     }
@@ -60,7 +76,8 @@ function Main({ navigation }) {
 
     return (
         <>
-            <MapView 
+            <MapView
+                region={ currentRegion }
                 onRegionChangeComplete={ handleRegionChanged } 
                 initialRegion={ currentRegion } 
                 style={ styles.map }
@@ -85,10 +102,13 @@ function Main({ navigation }) {
                         </Callout>
                     </Marker>
                 ))}
-
-
             </MapView>
-            <View style={ styles.searchForm }>
+
+            <TouchableOpacity onPress={ loadPosition } style={{ ...styles.loadButton, ...styles.centerButton }}>
+                <MaterialIcons name="my-location" size={20} color="#FFF" />
+            </TouchableOpacity>
+
+            <View style={{ ...styles.searchForm, bottom: keyboardHeight + 20 }}>
                 <TextInput 
                     style={ styles.searchInput }
                     placeholder="Buscar devs por techs..."
@@ -131,9 +151,13 @@ const styles = StyleSheet.create({
     devTechs: {
         marginTop: 5
     },
-    searchForm: {
+    centerButton: {
         position: 'absolute',
         top: 20,
+        right: 20
+    },
+    searchForm: {
+        position: 'absolute',
         left: 20,
         right: 20,
         zIndex: 5,
