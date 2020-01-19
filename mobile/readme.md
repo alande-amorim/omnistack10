@@ -1,7 +1,7 @@
 Mobile App DevRadar
 ===
 
-[< back](../)
+[< back](/)
 
 ## Installation
 ```
