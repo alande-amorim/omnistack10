@@ -4,11 +4,10 @@ const SearchController = require('./controllers/SearchController');
 
 const routes = Router();
 
-routes.get('/', (req, res) => {
-    return res.send('Hello World!');
+routes.get('/socket', (req, res) => {
+  return res.sendFile(__dirname+'/utils/socket.html');
 });
 
-// routes.get('/search', SearchController.index);
 routes.get('/search', SearchController.index);
 
 routes.get('/devs', DevController.index);
